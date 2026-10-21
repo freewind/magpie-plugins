@@ -45,7 +45,7 @@ test("a listing with only one scene lists that scene", async () => {
   expect(Object.keys(await listed({ app: LISTING.app }))).not.toContain("performance")
 })
 
-test("a model the app turns off isn't listed though chat has it on", async () => {
+test("a model the app turns off is still listed: enable is no word on whether it answers", async () => {
   const app = LISTING.app.map((m) => (m.key === "efficient" ? { ...m, enable: false } : m))
-  expect(Object.keys(await listed({ chat: LISTING.chat, app }))).not.toContain("efficient")
+  expect(Object.keys(await listed({ chat: LISTING.chat, app }))).toContain("efficient")
 })

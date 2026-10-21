@@ -580,11 +580,15 @@ function sceneModels(listing) {
   return out
 }
 
-// modelInfos is the listing's enabled models an agent can pick: "auto"
-// and "default" route inside Qoder and aren't one model.
+// modelInfos is the models the listing gives an agent to pick: "auto" and
+// "default" route inside Qoder and aren't one model. enable is no word on
+// that: Qoder sets it false on a model the account can still ask (Qwen3.8-Max
+// answered normally after its trial's credits ran out, and Qoder's own client
+// lists such a model anyway), so the account's listing is followed, not the
+// flag.
 function modelInfos(listing) {
   return sceneModels(listing)
-    .filter((m) => m?.enable && !["", "auto", "default"].includes(String(m.key ?? "").trim()))
+    .filter((m) => !["", "auto", "default"].includes(String(m.key ?? "").trim()))
     .map(modelInfo)
 }
 
